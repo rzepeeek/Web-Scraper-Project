@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  interface:
+    build: ./interface
+    ports:
+      - "5000:5000"
+    depends_on:
+      - engine
+
+  engine:
+    build: ./engine
+    ports:
+      - "5001:5001"
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"

@@ -1,0 +1,79 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #0f172a, #020617);
+    color: #e2e8f0;
+}
+
+/* kontener */
+.container {
+    width: 600px;
+    margin: 80px auto;
+    padding: 30px;
+    border-radius: 16px;
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 40px rgba(0,0,0,0.5);
+    animation: fadeIn 1s ease;
+}
+
+/* nagłówek */
+h1 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+/* textarea */
+textarea {
+    width: 100%;
+    height: 130px;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    font-size: 14px;
+    outline: none;
+    background: #0f172a;
+    color: white;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+}
+
+/* przycisk */
+button {
+    width: 100%;
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+    color: #020617;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #38bdf8;
+}
+
+/* komunikat */
+.msg {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 16px;
+    color: #38bdf8;
+}
+
+/* animacja */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

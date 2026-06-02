@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Web Scraper</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>🌐 Web Scraper</h1>
+
+    <form method="POST">
+        <textarea name="urls" placeholder="https://example.com, https://test.com"></textarea>
+        <button type="submit">🚀 Start Scrapowania</button>
+    </form>
+
+    {% if message %}
+        <p class="msg">{{ message }}</p>
+    {% endif %}
+</div>
+
+</body>
+</html>
