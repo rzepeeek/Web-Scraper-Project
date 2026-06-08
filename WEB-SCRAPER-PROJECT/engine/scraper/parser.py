@@ -9,7 +9,12 @@ def parse_html(html):
     phones = re.findall(r"\\+?\\d[\\d\\s-]{8,}", html)
     links = [a.get("href") for a in soup.find_all("a") if a.get("href")]
     headers = [h.text.strip() for h in soup.find_all("h1")]
-    images = [img.get("src") for img in soup.find_all("img") if img.get("src")]
+    subheaders = [h.text.strip() for h in soup.find_all("h2") if h.text.strip()]
+    
+    description = ""
+    meta = soup.find("meta", attrs={"name": "description"})
+    if meta:
+        description = meta.get("content", "")
 
     return {
         "titles": title,
@@ -18,5 +23,6 @@ def parse_html(html):
         "links": links,
         "addresses": [],
         "headers": headers,
-        "images": images
+        "subheaders": subheaders,
+        "description": description
     }
