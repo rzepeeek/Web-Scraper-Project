@@ -66,6 +66,10 @@ docker-compose up --build
 ```text
 http://127.0.0.1:5000
 ```
+lub
+```text
+http://localhost:5000
+```
 
 ---
 
