@@ -139,6 +139,3 @@ db.data.countDocuments()
 
 * Adrian Czarnota 21442
 * Dawid Rzepka 21299
-
-**ANS w Elblągu**
-**Przetwarzanie równoległe i rozproszone**
