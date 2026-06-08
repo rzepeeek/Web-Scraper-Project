@@ -1,4 +1,4 @@
-# 🌍 Web Scraper Project (Distributed System)
+# 🌍 Web Scraper Project 
 
 System do pobierania i analizy danych ze stron internetowych, działający w architekturze rozproszonej.
 
