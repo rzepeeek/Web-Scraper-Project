@@ -6,21 +6,35 @@ System do pobierania i analizy danych ze stron internetowych, działający w arc
 
 ## 📖 Opis projektu
 
-Aplikacja umożliwia użytkownikowi wprowadzenie adresów URL poprzez interfejs webowy.
-Podane strony są następnie asynchronicznie pobierane i przetwarzane przez silnik scrapujący.
-Wyodrębnione dane (np. linki, adresy e-mail, numery telefonów oraz adresy) zapisywane są w bazie danych MongoDB.
+Aplikacja umożliwia użytkownikowi wprowadzenie jednego lub wielu adresów URL poprzez interfejs webowy.
+
+Podane strony są następnie asynchronicznie pobierane i analizowane przez silnik scrapujący. Z wykorzystaniem biblioteki BeautifulSoup wyodrębniane są różne grupy danych, które następnie zapisywane są w bazie MongoDB.
+
+### 📌 Profil pobieranych danych
+
+* 📄 Tytuł strony (HTML Title)
+* 📧 Adresy e-mail
+* 📞 Numery telefonów
+* 🔗 Linki (href)
+* 📰 Nagłówki H1
+* 📑 Nagłówki H2
+* 🏷️ Meta Description
 
 ---
 
 ## 🧩 Architektura systemu
 
-Projekt składa się z trzech modułów:
+Projekt został podzielony na trzy niezależne moduły:
 
 * 🖥 **Interface (Flask + HTML/CSS)** – formularz do wprowadzania adresów URL
-* ⚙️ **Engine (asyncio + multiprocessing)** – równoległe pobieranie i przetwarzanie danych
-* 🗄 **MongoDB** – przechowywanie danych
+* ⚙️ **Engine (asyncio + multiprocessing + BeautifulSoup)** – równoległe pobieranie i analiza danych
+* 🗄 **MongoDB** – przechowywanie wyników scrapowania
 
-📦 Całość działa w kontenerach Docker zarządzanych przez Docker Compose.
+📦 Wszystkie moduły działają w osobnych kontenerach Docker zarządzanych przez Docker Compose.
+
+```text
+[ INTERFACE ] → [ ENGINE ] → [ MONGO DB ]
+```
 
 ---
 
@@ -29,26 +43,28 @@ Projekt składa się z trzech modułów:
 * Python 3
 * Flask
 * aiohttp
-* BeautifulSoup4
+* asyncio
 * multiprocessing
+* BeautifulSoup4
 * HTML / CSS
 * MongoDB
-* Docker + Docker Compose
+* Docker
+* Docker Compose
 
 ---
 
 ## ▶️ Uruchomienie
 
 ```bash
-git clone https://github.com/rzepeeek/Projekt_Python_Scraping.git
-cd Projekt_Python_Scraping/WEB-SCRAPER-PROJECT
+git clone https://github.com/rzepeeek/Web-Scraper-Project.git
+cd WEB-SCRAPER-PROJECT
 docker-compose up --build
 ```
 
-🌐 Aplikacja dostępna pod adresem:
+🌐 Aplikacja będzie dostępna pod adresem:
 
 ```text
-http://localhost:5000
+http://127.0.0.1:5000
 ```
 
 ---
@@ -60,21 +76,56 @@ http://localhost:5000
 3. Aplikacja rozpocznie pobieranie i analizę danych.
 4. Wyniki zostaną zapisane w bazie MongoDB.
 
+Przykładowe strony testowe:
+
+```text
+https://www.wp.pl
+https://www.mongodb.com/contact
+https://www.mongodb.com/products/subscription/order-confirmation
+```
+
+---
+
+## 🗃️ Sprawdzenie wyników
+
+Dane można sprawdzić za pomocą MongoDB Compass lub z poziomu terminala.
+
+Uruchomienie konsoli MongoDB:
+
+```bash
+docker exec -it web-scraper-project-mongo-1 mongosh
+```
+
+Następnie:
+
+```javascript
+use scraper_db
+db.data.find().pretty()
+```
+
+Liczbę zapisanych stron można sprawdzić poleceniem:
+
+```javascript
+db.data.countDocuments()
+```
+
 ---
 
 ## 🔍 Testowanie
 
 * Testy przeprowadzono lokalnie (Windows + Docker Desktop)
-* Poprawność zapisu danych zweryfikowano przy użyciu MongoDB Compass oraz mongosh
-* System poprawnie obsługuje wiele adresów URL i przetwarza je równolegle
+* Zweryfikowano poprawność komunikacji pomiędzy modułami
+* Sprawdzono poprawność zapisu danych do MongoDB
+* Potwierdzono równoległe przetwarzanie wielu adresów URL
+* Zweryfikowano poprawne wyodrębnianie tytułów stron, nagłówków HTML oraz metadanych
 
 ---
 
 ## 🚧 Dalszy rozwój
 
 * 📊 Wyświetlanie wyników bezpośrednio w interfejsie webowym
-* ⏱ Automatyczne scrapowanie według harmonogramu
-* 📬 Kolejkowanie zadań (Redis / Celery)
+* 🏠 Wykrywanie adresów pocztowych i obrazów
+* 📬 Rozbudowa parsera o dodatkowe typy danych
 * 🎨 Rozbudowa interfejsu użytkownika
 * ☁️ Skalowanie aplikacji na wiele instancji
 
@@ -84,3 +135,6 @@ http://localhost:5000
 
 * Adrian Czarnota 21442
 * Dawid Rzepka 21299
+
+**ANS w Elblągu**
+**Przetwarzanie równoległe i rozproszone**
